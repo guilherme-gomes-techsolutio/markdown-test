@@ -128,57 +128,57 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     participant PM as 📋 Process Manager
-    participant Pipeline as DuplicityCheckPipelines
-    participant Task1 as DuplicityCheckSwtTask
-    participant Task2 as GetEquipmentDetailsTask
-    participant Task3 as VrfDiscoveryTask
-    participant Task4 as CollectHostnameTask
-    participant Task5 as DuplicityCheckResultTask
-    participant Network as 🌐 Network Device
+    participant PL as DuplicityCheckPipelines
+    participant T1 as DuplicityCheckSwtTask
+    participant T2 as GetEquipmentDetailsTask
+    participant T3 as VrfDiscoveryTask
+    participant T4 as CollectHostnameTask
+    participant T5 as DuplicityCheckResultTask
+    participant NW as 🌐 Network Device
 
     Note over PM: User requests duplicity check<br/>for SWT equipment
 
-    PM->>Pipeline: Request DUPLICITY_CHECK<br/>SWT + DEDICATED_IP + GPON
+    PM->>PL: Request DUPLICITY_CHECK<br/>SWT + DEDICATED_IP + GPON
 
-    activate Pipeline
-    Pipeline->>Pipeline: Select SWT Pipeline<br/>5 tasks to execute
+    activate PL
+    PL->>PL: Select SWT Pipeline<br/>5 tasks to execute
 
-    Pipeline->>Task1: Execute Task 1
-    activate Task1
-    Task1->>Network: Check SWT configuration
-    Network-->>Task1: Configuration data
-    Task1-->>Pipeline: Check complete
-    deactivate Task1
+    PL->>T1: Execute Task 1
+    activate T1
+    T1->>NW: Check SWT configuration
+    NW-->>T1: Configuration data
+    T1-->>PL: Check complete
+    deactivate T1
 
-    Pipeline->>Task2: Execute Task 2
-    activate Task2
-    Task2->>Network: Get equipment details
-    Network-->>Task2: Equipment information
-    Task2-->>Pipeline: Details retrieved
-    deactivate Task2
+    PL->>T2: Execute Task 2
+    activate T2
+    T2->>NW: Get equipment details
+    NW-->>T2: Equipment information
+    T2-->>PL: Details retrieved
+    deactivate T2
 
-    Pipeline->>Task3: Execute Task 3
-    activate Task3
-    Task3->>Network: Discover VRF configuration
-    Network-->>Task3: VRF data
-    Task3-->>Pipeline: Discovery complete
-    deactivate Task3
+    PL->>T3: Execute Task 3
+    activate T3
+    T3->>NW: Discover VRF configuration
+    NW-->>T3: VRF data
+    T3-->>PL: Discovery complete
+    deactivate T3
 
-    Pipeline->>Task4: Execute Task 4
-    activate Task4
-    Task4->>Network: Collect hostname
-    Network-->>Task4: Hostname data
-    Task4-->>Pipeline: Hostname collected
-    deactivate Task4
+    PL->>T4: Execute Task 4
+    activate T4
+    T4->>NW: Collect hostname
+    NW-->>T4: Hostname data
+    T4-->>PL: Hostname collected
+    deactivate T4
 
-    Pipeline->>Task5: Execute Task 5
-    activate Task5
-    Task5->>Task5: Consolidate results<br/>Generate report
-    Task5-->>Pipeline: Final result
-    deactivate Task5
+    PL->>T5: Execute Task 5
+    activate T5
+    T5->>T5: Consolidate results<br/>Generate report
+    T5-->>PL: Final result
+    deactivate T5
 
-    Pipeline-->>PM: ✅ Duplicity check result
-    deactivate Pipeline
+    PL-->>PM: ✅ Duplicity check result
+    deactivate PL
 
     Note over PM: Process complete<br/>Result available
 ```
@@ -190,65 +190,65 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
     participant PM as 📋 Process Manager
-    participant Pipeline as DuplicityCheckPipelines
-    participant SipCheck as DuplicityCheckSipTask
-    participant VrfCheck as DuplicityCheckSipVrfTask
-    participant BgpCheck as DuplicityCheckSipBgpTask
-    participant VpnCheck as DuplicityCheckSipVpnTask
-    participant Details as GetEquipmentDetailsTask
-    participant Interface as GetCompletePeInterfaceDuplicityCheckTask
-    participant Customer as GetCustomerNameDuplicityCheckTask
-    participant Result as DuplicityCheckResultTask
+    participant PL as DuplicityCheckPipelines
+    participant T1 as DuplicityCheckSipTask
+    participant T2 as DuplicityCheckSipVrfTask
+    participant T3 as DuplicityCheckSipBgpTask
+    participant T4 as DuplicityCheckSipVpnTask
+    participant T5 as GetEquipmentDetailsTask
+    participant T6 as GetCompletePeInterfaceTask
+    participant T7 as GetCustomerNameTask
+    participant T8 as DuplicityCheckResultTask
 
     Note over PM: SIP Product Request<br/>Most Complex Pipeline (8 tasks)
 
-    PM->>Pipeline: DUPLICITY_CHECK<br/>PE + SIP + GPON/SWT/FSP
+    PM->>PL: DUPLICITY_CHECK<br/>PE + SIP + GPON/SWT/FSP
 
-    activate Pipeline
+    activate PL
 
-    Pipeline->>SipCheck: 1. Check SIP Configuration
-    activate SipCheck
-    SipCheck-->>Pipeline: SIP validation complete
-    deactivate SipCheck
+    PL->>T1: 1. Check SIP Configuration
+    activate T1
+    T1-->>PL: SIP validation complete
+    deactivate T1
 
-    Pipeline->>VrfCheck: 2. Check VRF for SIP
-    activate VrfCheck
-    VrfCheck-->>Pipeline: VRF check complete
-    deactivate VrfCheck
+    PL->>T2: 2. Check VRF for SIP
+    activate T2
+    T2-->>PL: VRF check complete
+    deactivate T2
 
-    Pipeline->>BgpCheck: 3. Check BGP for SIP
-    activate BgpCheck
-    BgpCheck-->>Pipeline: BGP check complete
-    deactivate BgpCheck
+    PL->>T3: 3. Check BGP for SIP
+    activate T3
+    T3-->>PL: BGP check complete
+    deactivate T3
 
-    Pipeline->>VpnCheck: 4. Check VPN for SIP
-    activate VpnCheck
-    VpnCheck-->>Pipeline: VPN check complete
-    deactivate VpnCheck
+    PL->>T4: 4. Check VPN for SIP
+    activate T4
+    T4-->>PL: VPN check complete
+    deactivate T4
 
-    Pipeline->>Details: 5. Get Equipment Details
-    activate Details
-    Details-->>Pipeline: Equipment data retrieved
-    deactivate Details
+    PL->>T5: 5. Get Equipment Details
+    activate T5
+    T5-->>PL: Equipment data retrieved
+    deactivate T5
 
-    Pipeline->>Interface: 6. Get Complete PE Interface
-    activate Interface
-    Interface-->>Pipeline: Interface data retrieved
-    deactivate Interface
+    PL->>T6: 6. Get Complete PE Interface
+    activate T6
+    T6-->>PL: Interface data retrieved
+    deactivate T6
 
-    Pipeline->>Customer: 7. Get Customer Name
-    activate Customer
-    Customer-->>Pipeline: Customer identified
-    deactivate Customer
+    PL->>T7: 7. Get Customer Name
+    activate T7
+    T7-->>PL: Customer identified
+    deactivate T7
 
-    Pipeline->>Result: 8. Generate Final Result
-    activate Result
-    Result->>Result: Consolidate all checks<br/>Generate comprehensive report
-    Result-->>Pipeline: Final result ready
-    deactivate Result
+    PL->>T8: 8. Generate Final Result
+    activate T8
+    T8->>T8: Consolidate all checks<br/>Generate comprehensive report
+    T8-->>PL: Final result ready
+    deactivate T8
 
-    Pipeline-->>PM: ✅ Complete SIP duplicity check
-    deactivate Pipeline
+    PL-->>PM: ✅ Complete SIP duplicity check
+    deactivate PL
 
     Note over PM: Comprehensive validation complete
 ```
@@ -729,37 +729,37 @@ sequenceDiagram
     participant User as 👤 User
     participant UI as 🖥️ UI Application
     participant PM as 📋 Process Manager
-    participant Pipeline as DuplicityCheckPipelines
-    participant Tasks as 🔧 Task Executors
-    participant Network as 🌐 Network Devices
+    participant PL as DuplicityCheckPipelines
+    participant TK as 🔧 Task Executors
+    participant NW as 🌐 Network Devices
     participant DB as 💾 Database
 
     User->>UI: Request service provisioning
     UI->>PM: Submit provisioning request
     PM->>PM: Validate request data
 
-    PM->>Pipeline: Request DUPLICITY_CHECK<br/>with equipment/product/tech
+    PM->>PL: Request DUPLICITY_CHECK<br/>with equipment/product/tech
 
-    activate Pipeline
-    Pipeline->>Pipeline: Determine pipeline<br/>based on request type
+    activate PL
+    PL->>PL: Determine pipeline<br/>based on request type
 
-    Pipeline->>Tasks: Execute pipeline tasks sequentially
-    activate Tasks
+    PL->>TK: Execute pipeline tasks sequentially
+    activate TK
 
     loop For each task
-        Tasks->>Network: Query network device
-        Network-->>Tasks: Device response
-        Tasks->>DB: Store intermediate results
-        Tasks->>Tasks: Process data
+        TK->>NW: Query network device
+        NW-->>TK: Device response
+        TK->>DB: Store intermediate results
+        TK->>TK: Process data
     end
 
-    Tasks-->>Pipeline: All tasks completed
-    deactivate Tasks
+    TK-->>PL: All tasks completed
+    deactivate TK
 
-    Pipeline->>Pipeline: Consolidate results
-    Pipeline-->>PM: Return duplicity check result
+    PL->>PL: Consolidate results
+    PL-->>PM: Return duplicity check result
 
-    deactivate Pipeline
+    deactivate PL
 
     PM->>PM: Evaluate result
 
